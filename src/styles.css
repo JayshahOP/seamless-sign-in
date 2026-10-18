@@ -142,3 +142,22 @@
     color: var(--color-foreground);
   }
 }
+
+:root {
+  --background: oklch(0.975 0.006 270);
+  --foreground: oklch(0.3 0.01 270);
+  --primary: oklch(0.68 0.19 22);
+  --primary-foreground: oklch(1 0 0);
+  --primary-glow: oklch(0.8 0.12 30);
+  --muted-foreground: oklch(0.55 0.01 270);
+  --card: oklch(1 0 0);
+  --input: oklch(0.93 0.005 270);
+  --ring: oklch(0.68 0.19 22);
+  --gradient-brand: linear-gradient(110deg, oklch(0.66 0.2 22), oklch(0.8 0.12 30));
+  --shadow-brand: 0 5px 0 0 oklch(0.58 0.2 22);
+}
+@theme inline {
+  --color-primary-glow: var(--primary-glow);
+}
+@utility bg-brand { background-image: var(--gradient-brand); }
+@utility shadow-brand { box-shadow: var(--shadow-brand); }
