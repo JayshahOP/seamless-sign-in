@@ -81,7 +81,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <div>
           <label className="mb-2 mt-4 flex items-center gap-2 text-base"><Smartphone className="h-6 w-6 text-primary" />Phone number</label>
           <div className="flex gap-2">
-            <select value={cc} onChange={(e) => setCc(e.target.value)} className={`${inputCls} w-28 text-center`}>
+            <select value={cc} onChange={(e) => setCc(e.target.value)} className={`${inputCls} !w-24 shrink-0 text-center`}>
               {["+91", "+1", "+44", "+971", "+92", "+880"].map((c) => <option key={c}>{c}</option>)}
             </select>
             <input inputMode="numeric" placeholder="Please enter the phone number" value={phone}
