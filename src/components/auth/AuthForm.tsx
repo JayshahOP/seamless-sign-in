@@ -60,6 +60,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
     }
     toast.success(mode === "login" ? "Logged in" : "Account created");
     navigate({ to: "/home" });
+    return undefined;
   };
 
   const Tab = ({ id, icon: Icon, label }: { id: "phone" | "email"; icon: typeof Mail; label: string }) => (
