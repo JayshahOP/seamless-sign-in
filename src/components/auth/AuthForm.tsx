@@ -21,12 +21,13 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (mode !== "login") return;
+    if (mode !== "login") return undefined;
     const saved = localStorage.getItem("remember_login");
     if (saved) {
       const s = JSON.parse(saved);
       setTab(s.tab); setCc(s.cc ?? "+91"); setPhone(s.phone ?? ""); setEmail(s.email ?? "");
     }
+    return undefined;
   }, [mode]);
 
   const submit = async (e: React.FormEvent) => {

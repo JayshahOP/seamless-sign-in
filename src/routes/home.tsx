@@ -21,8 +21,8 @@ function Home() {
   const [who, setWho] = useState<string | null>(null);
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) return navigate({ to: "/", replace: true });
-      setWho((data.user.user_metadata?.phone as string) || data.user.email || "");
+      if (!data.user) { navigate({ to: "/", replace: true }); return; }
+      setWho((data.user.user_metadata?.["phone"] as string) || data.user.email || "");
     });
   }, [navigate]);
   if (who === null) return null;
