@@ -30,7 +30,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
     return undefined;
   }, [mode]);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent): Promise<unknown> => {
     e.preventDefault();
     let loginEmail = "";
     if (tab === "phone") {
