@@ -124,9 +124,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
 
       <div className="space-y-4 px-6 pt-4">
         <button disabled={busy} className={btnPrimary}>{busy ? "Please wait…" : mode === "login" ? "Log in" : "Register"}</button>
-        {mode === "login"
-          ? <Link to="/register" className={btnOutline}>Register</Link>
-          : <Link to="/" className={btnOutline}>I have an account, Log in</Link>}
+        {mode !== "login" && <Link to="/" className={btnOutline}>I have an account, Log in</Link>}
       </div>
     </form>
   );
