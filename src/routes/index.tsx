@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: () => (
-    <AuthShell title="Log in" subtitle={<>Please log in with your phone number or email<br />If you forget your password, please contact customer service</>}>
+    <AuthShell title="Log in" subtitle="Please log in with your phone number or email">
       <AuthForm />
     </AuthShell>
   ),
