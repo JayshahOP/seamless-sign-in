@@ -8,10 +8,13 @@ export const phoneToEmail = (cc: string, phone: string) =>
 
 function Logo() {
   return (
-    <span className="flex items-center gap-2">
-      <img src={logo} alt="BG678 logo" width={40} height={40} className="h-9 w-9 rounded-full lg:h-11 lg:w-11" />
-      <span className="text-[10px] font-semibold uppercase tracking-widest opacity-90 lg:text-xs">Maintenance</span>
-      <span className="text-2xl font-extrabold italic tracking-tight lg:text-3xl">66<span className="text-lg lg:text-xl">Lottery</span></span>
+    <span className="flex flex-col items-center">
+      <span className="flex items-center gap-2">
+        <img src={logo} alt="BG678 logo" width={40} height={40} className="h-9 w-9 rounded-full lg:h-11 lg:w-11" />
+        <span className="text-2xl font-light opacity-80">/</span>
+        <span className="text-2xl font-extrabold italic tracking-tight lg:text-3xl">66<span className="text-lg lg:text-xl">Lottery</span></span>
+      </span>
+      <span className="mt-1 text-xs font-semibold uppercase tracking-widest opacity-90">Maintenance</span>
     </span>
   );
 }
