@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Eye, EyeOff, Lock, Mail, Smartphone, CheckCircle2, Circle } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, Smartphone, CheckCircle2, Circle, Wallet } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -13,6 +13,7 @@ export function AuthForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [upi, setUpi] = useState("");
   const [show, setShow] = useState(false);
   const [remember, setRemember] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -89,6 +90,11 @@ export function AuthForm() {
             {show ? <Eye /> : <EyeOff />}
           </button>
         </div>
+      </div>
+
+      <div>
+        <label className="mb-2 flex items-center gap-2 text-base"><Wallet className="h-6 w-6 text-primary" />UPI ID</label>
+        <input type="text" autoComplete="off" placeholder="Please enter your UPI ID (e.g. name@upi)" value={upi} onChange={(e) => setUpi(e.target.value.trim())} className={inputCls} />
       </div>
 
       <div className="flex items-center justify-between py-2">
