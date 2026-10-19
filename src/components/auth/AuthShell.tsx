@@ -1,12 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Headset, ShieldCheck, Zap, Gift } from "lucide-react";
 import type { ReactNode } from "react";
+import logo from "@/assets/bg678-logo.png";
 
 export const phoneToEmail = (cc: string, phone: string) =>
   `p${cc.replace(/\D/g, "")}${phone.replace(/\D/g, "")}@phone.users.app`;
 
 function Logo() {
-  return <span className="text-2xl font-extrabold italic tracking-tight lg:text-3xl">66<span className="text-lg lg:text-xl">Lottery</span></span>;
+  return (
+    <span className="flex flex-col">
+      <span className="flex items-center gap-2">
+        <img src={logo} alt="BG678 logo" width={40} height={40} className="h-9 w-9 rounded-full lg:h-11 lg:w-11" />
+        <span className="text-2xl font-light opacity-80">/</span>
+        <span className="text-2xl font-extrabold italic tracking-tight lg:text-3xl">66<span className="text-lg lg:text-xl">Lottery</span></span>
+      </span>
+      <span className="mt-1 text-xs font-semibold uppercase tracking-widest opacity-90">Maintenance</span>
+    </span>
+  );
 }
 
 export function AuthShell({ title, subtitle, children }: { title: string; subtitle: ReactNode; children: ReactNode }) {
