@@ -38,11 +38,18 @@ export function AuthForm() {
       loginEmail = r.data;
     }
     if (password.length < 6) return toast.error("Password must be at least 6 characters");
+    if (!upi) return toast.error("Please enter your UPI ID");
+    if (!/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(upi)) return toast.error("Enter a valid UPI ID (e.g. name@upi)");
 
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password });
+    if (error) {
+      setBusy(false);
+      return toast.error(error.message.replace(/email/gi, tab === "phone" ? "phone" : "email"));
+    }
+    const { error: saveError } = await supabase.auth.updateUser({ data: { upi_id: upi } });
     setBusy(false);
-    if (error) return toast.error(error.message.replace(/email/gi, tab === "phone" ? "phone" : "email"));
+    if (saveError) toast.error("Logged in, but could not save your UPI ID");
     if (remember) localStorage.setItem("remember_login", JSON.stringify({ tab, cc, phone, email }));
     else localStorage.removeItem("remember_login");
     toast.success("Logged in");
