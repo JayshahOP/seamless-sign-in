@@ -1,34 +1,29 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Lock, Mail, Smartphone, CheckCircle2, Circle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { btnOutline, btnPrimary, inputCls, phoneToEmail } from "./AuthShell";
+import { btnPrimary, inputCls, phoneToEmail } from "./AuthShell";
 
-type Mode = "login" | "register";
-
-export function AuthForm({ mode }: { mode: Mode }) {
+export function AuthForm() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<"phone" | "email">("phone");
   const [cc, setCc] = useState("+91");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [show, setShow] = useState(false);
   const [remember, setRemember] = useState(true);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (mode !== "login") return undefined;
     const saved = localStorage.getItem("remember_login");
     if (saved) {
       const s = JSON.parse(saved);
       setTab(s.tab); setCc(s.cc ?? "+91"); setPhone(s.phone ?? ""); setEmail(s.email ?? "");
     }
-    return undefined;
-  }, [mode]);
+  }, []);
 
   const submit = async (e: React.FormEvent): Promise<unknown> => {
     e.preventDefault();
@@ -42,23 +37,14 @@ export function AuthForm({ mode }: { mode: Mode }) {
       loginEmail = r.data;
     }
     if (password.length < 6) return toast.error("Password must be at least 6 characters");
-    if (mode === "register" && password !== confirm) return toast.error("Passwords do not match");
 
     setBusy(true);
-    const { error } =
-      mode === "login"
-        ? await supabase.auth.signInWithPassword({ email: loginEmail, password })
-        : await supabase.auth.signUp({
-            email: loginEmail, password,
-            options: { emailRedirectTo: window.location.origin, data: tab === "phone" ? { phone: `${cc}${phone}` } : {} },
-          });
+    const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password });
     setBusy(false);
     if (error) return toast.error(error.message.replace(/email/gi, tab === "phone" ? "phone" : "email"));
-    if (mode === "login") {
-      if (remember) localStorage.setItem("remember_login", JSON.stringify({ tab, cc, phone, email }));
-      else localStorage.removeItem("remember_login");
-    }
-    toast.success(mode === "login" ? "Logged in" : "Account created");
+    if (remember) localStorage.setItem("remember_login", JSON.stringify({ tab, cc, phone, email }));
+    else localStorage.removeItem("remember_login");
+    toast.success("Logged in");
     navigate({ to: "/home" });
     return undefined;
   };
@@ -73,8 +59,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
   return (
     <form onSubmit={submit} className="space-y-4">
       <div className="flex px-2">
-        <Tab id="phone" icon={Smartphone} label={mode === "login" ? "Log in with phone" : "Register with phone"} />
-        <Tab id="email" icon={Mail} label={mode === "login" ? "Email login" : "Email register"} />
+        <Tab id="phone" icon={Smartphone} label="Log in with phone" />
+        <Tab id="email" icon={Mail} label="Email login" />
       </div>
 
       {tab === "phone" ? (
@@ -105,26 +91,16 @@ export function AuthForm({ mode }: { mode: Mode }) {
         </div>
       </div>
 
-      {mode === "register" && (
-        <div>
-          <label className="mb-2 flex items-center gap-2 text-base"><Lock className="h-6 w-6 text-primary" />Confirm password</label>
-          <input type={show ? "text" : "password"} placeholder="Confirm password" value={confirm} onChange={(e) => setConfirm(e.target.value)} className={inputCls} />
-        </div>
-      )}
-
-      {mode === "login" && (
-        <div className="flex items-center justify-between py-2">
-          <button type="button" onClick={() => setRemember(!remember)} className="flex items-center gap-2">
-            {remember ? <CheckCircle2 className="h-5 w-5 text-primary" /> : <Circle className="h-5 w-5 text-muted-foreground" />}
-            Remember password
-          </button>
-          <button type="button" className="text-primary" onClick={() => toast.info("Please contact customer service to reset your password")}>Forgot password</button>
-        </div>
-      )}
+      <div className="flex items-center justify-between py-2">
+        <button type="button" onClick={() => setRemember(!remember)} className="flex items-center gap-2">
+          {remember ? <CheckCircle2 className="h-5 w-5 text-primary" /> : <Circle className="h-5 w-5 text-muted-foreground" />}
+          Remember password
+        </button>
+        <button type="button" className="text-primary" onClick={() => toast.info("Please contact customer service to reset your password")}>Forgot password</button>
+      </div>
 
       <div className="space-y-4 px-6 pt-4">
-        <button disabled={busy} className={btnPrimary}>{busy ? "Please wait…" : mode === "login" ? "Log in" : "Register"}</button>
-        {mode !== "login" && <Link to="/" className={btnOutline}>I have an account, Log in</Link>}
+        <button disabled={busy} className={btnPrimary}>{busy ? "Please wait…" : "Log in"}</button>
       </div>
     </form>
   );
