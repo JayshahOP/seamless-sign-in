@@ -96,7 +96,6 @@ export function AuthForm() {
           {remember ? <CheckCircle2 className="h-5 w-5 text-primary" /> : <Circle className="h-5 w-5 text-muted-foreground" />}
           Remember password
         </button>
-        <button type="button" className="text-primary" onClick={() => toast.info("Please contact customer service to reset your password")}>Forgot password</button>
       </div>
 
       <div className="space-y-4 px-6 pt-4">

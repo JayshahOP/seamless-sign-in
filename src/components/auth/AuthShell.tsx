@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Headset, ShieldCheck, Zap, Gift } from "lucide-react";
+import { ChevronLeft, ShieldCheck, Zap, Gift } from "lucide-react";
 import type { ReactNode } from "react";
 import logo from "@/assets/bg678-logo.png";
 
@@ -57,9 +57,6 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
           <main className="px-4 pb-24 pt-4 md:px-8 md:pb-8">{children}</main>
         </div>
       </div>
-      <a href="#" aria-label="Customer service" className="fixed bottom-8 right-6 grid h-14 w-14 place-items-center rounded-full bg-card text-primary shadow-lg">
-        <Headset className="h-8 w-8" />
-      </a>
     </div>
   );
 }
